@@ -1,0 +1,141 @@
+body {
+	text-align: center;
+}
+
+.centered {
+	width:  50%;
+	display: inline-block;
+	text-align: left;
+}
+
+code {
+	border-radius: 3px;
+	display: inline-block;
+}
+
+hr {
+	border: none;
+	border-top: 3px double #333;
+	color: #333;
+	overflow: visible;
+	text-align: center;
+	height: 5px;
+}
+
+hr:after {
+	background: #fff;
+	content: '§';
+	padding: 0 4px;
+	position: relative;
+	top: -13px;
+}
+
+blockquote {
+	margin: 0;
+}
+
+blockquote {
+	padding: 15px;
+	background: #eee;
+	border-radius: 5px;
+}
+
+blockquote::before {
+	content: '\201C';
+}
+
+blockquote::after {
+	content: '\201D';
+}
+
+.inline-code {
+	background-color: #eee;
+	border-radius: 3px;
+	font-family: courier, monospace;
+	padding: 0 3px;
+}
+
+h1 {
+	border-radius: 10px;
+	background-color: rgba(221,255,221,0.4);
+	box-shadow: 5px 5px rgba(221, 225, 221);
+	padding: 0.5%;
+	border: 2px solid rgba(0,0,0,0.2);
+}
+
+h1::before {
+	content: '#';
+	color: lightgray;
+	font-family: Georgia, Arial, serif;
+}
+
+h2 {
+	border-radius: 10px;
+	background-color: rgba(255,221,221,0.4);
+	box-shadow: 5px 5px rgba(255, 221, 221);
+	padding: 1%;
+	border: 2px solid rgba(0,0,0,0.2);
+}
+
+h2::before {
+	content: '#';
+	color: lightgray;
+	font-family: Georgia, Arial, serif;
+}
+
+h3 {
+	border-radius: 10px;
+	background-color: rgba(221,221,255,0.4);
+	box-shadow: 5px 5px rgba(221, 221, 255);
+	padding: 0.5%;
+	border: 2px solid rgba(0,0,0,0.2);
+}
+
+h3::before {
+	content: '#';
+	color: lightgray;
+	font-family: Georgia, Arial, serif;
+}
+
+pre code {
+    display:block;
+    overflow-x:auto;
+    padding:1em;
+
+    background:#eaeef3;
+    color:#00193a;
+
+    border-left:  5px solid  #BBBEC2;
+}
+
+.photo {
+	padding: 1%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	margin-top: 2%;
+	margin-bottom: 3%;
+
+	border: 2px solid gray;
+	border-radius: 10px;
+	background-color: rgba(0, 0, 255, 0.3);
+	box-shadow: 5px 7px rgba(0, 0, 255, 0.6);
+}
+
+#terminal-photos {
+	text-align: center;
+}
+
+#terminal-photos img {
+	display: inline-block;
+	width:  30%;
+	vertical-align: middle;
+	margin-right: 3%;
+}
+
+@media screen and (max-width: 720px) {
+	.centered {
+		width: 95%;
+	}
+}

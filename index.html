@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>The ENIAC Page</title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="icon" href="assets/icons/tree.ico">
+	</head>
+
+	<body>
+	<div class="centered">
+		<h1> The ENIAC Page</h1>
+		<p>By Hunter Open Source Club</p>
+
+		<hr>
+
+		<p>
+			This page is dedicated to information about our school's UNIX workstations, collectively referred to as <code class="inline-code">ENIAC</code>. (NOTE: The name is kind of a misnomer, as technically <code class="inline-code">ENIAC</code> is only the gateway machine; the rest of the computers are named {<code class="inline-code">cslab1</code>, <code class="inline-code">cslab2</code>, ... <code class="inline-code">cslab30</code>}).
+		</p>
+
+		<p>
+			As Hunter students, we have the ability to remotely log in to these lab computers via <code class="inline-code">ssh</code> (or use them in person in the computer labs on the 10th floor). This is a great opportunity to explore the command-line and learn about UNIX. It's also lot of fun :).
+		</p>
+
+
+		<h2> Table of Contents</h2>
+		<ul>
+			<li>Historic note: what is an ENIAC?</li>
+			<li>Historic note: what is a UNIX?</li>
+			<li>Conceptual note: what is the command-line?</li>
+			<li>Connecting to ENIAC</li>
+			<li>Baby's First UNIX</li>
+			<li>Unix Weapons School
+				<ul>
+					<li>01, 02, 03, 04</li>
+					<li>Intermission: Shell Scripting</li>
+					<li>Intermission: Terminal User Interfaces (TUIs)</li>
+				</ul>
+			</li>
+			<li>Talking to Others</li>
+			<li>About Your Computer</li>
+			<li>Tranferring Files To and From ENIAC</li>
+			<li>Text Editors</li>
+			<li>Software on ENIAC
+				<ul>
+					<li>Programming Languages</li>
+					<li>Editors</li>
+					<li>Version Control Systems</li>
+					<li>Build Systems</li>
+					<li>Utilities for Debugging and Reverse Engineering Programs</li>
+					<li>Document Related</li>
+					<li>Image Related</li>
+					<li>Sound Related</li>
+					<li>Accessing The Internet</li>
+					<li>Linux Source Code</li>
+				</ul>
+			</li>
+			<li>Graphical Software on ENIAC and X11 Forwarding</li>
+			<li>Document Typesetting on UNIX</li>
+			<li>Appendix: Linux Distributions
+				<ul>
+					<li>Desktop Environments vs Windowing Systems </li>
+				</ul>
+			</li>
+		</ul>
+
+
+		<h2> Key (Conventions Used In This Document)</h2>
+		<p><img alt="ghost" src="assets/icons/ghost.gif"> - Whenever a section of this guide is not self contained (i.e. we expect you to go to outside sources to learn something) you'll see this icon.</p>
+
+		<p><img alt="note" src="assets/icons/butterfly.gif"> - Signifies a side note or fun fact.</p>
+		
+		<p>When you see something in angle brackets, e.g. <code class="inline-code">&lt;username&gt;</code>, interpret it as a placeholder for a value (in this case, your username). Square brackets, e.g. <code class="inline-code">[username]</code> are similar, but the value they denote is optional.</p>
+
+		<p>We precede lines on the command-line with the <code class="inline-code">$</code> symbol -- it isn't part of the actual commands being demonstrated.</p>
+
+		<h2> Historic note: what is an ENIAC?</h2>
+
+		<blockquote> ENIAC (Electronic Numerical Integrator and Computer) was the first programmable electronic, general-purpose digital computer, made in 1945.</blockquote>
+
+		<p><img alt="Photo of the ENIAC" src="assets/images/eniac.jpg" class="photo"></p>
+
+
+		<p>Our school system is named after this historic computer.</p>
+		<h2> Historic note: what is a UNIX?</h2>
+
+		<p><a href="https://en.wikipedia.org/wiki/Unix">UNIX</a> is an operating system created in the early 1970s at AT&T's Bell Laboratories.</p>
+
+		<p>When we say UNIX on this page, we are really referring to any system from the family of operating systems descending from UNIX, such as: Linux, MacOS, FreeBSD/OpenBSD/NetBSD, and so on. Yes, there are other systems besides Windows and MacOS :P; and yes, you are a UNIX user (you do have an iPhone or Android, right?).</p>
+
+		<p>The information on this page applies to the common command-line interface shared by UNIX-like systems. For more information on what exactly is in common between them, read about <a href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>. This <a href="https://en.wikipedia.org/wiki/Unix-like">article</a> may also be insightful.</p>
+
+		<p>If you are interested in further discussing the history of UNIX please email us. :).</p>
+		<img alt="UNIX || die" src="assets/images/unix.jpg">
+
+
+		<h2> Conceptual note: what is the command-line?</h2>
+		<p>Today we have two main sorts of interfaces through which we access our computer systems -- graphical and textual. Just as windows, menus, and the mouse cursor are the graphical means by which we orchestrate our computing environments, the command-line allows us to do so through text -- language instead of motions.</p>
+		
+		<p>Some tasks are better done graphically, others textually. You'll see :P.</p>
+		
+		<p>You may have heard these 3 terms: command-line, shell, and terminal. What exactly is the difference between them?</p>
+
+		<p><i>'Command-line'</i> is a generic term referring to the sort of interface where you interact with your computer by typing commands. </p>
+		<img alt="DOS command-line" src="assets/images/dos.png" class="photo">
+
+		<p><i>'Shell'</i> refers to a kind of program that implements this command-line interface (and has UNIX-related connotations). For example: <code class="inline-code">sh</code>, <code class="inline-code">bash</code>, etc.</p>
+
+		<p><i>'Terminal'</i> is a historical term. Computers were once very large, and one interacted with them via a terminal (and before that, a teletype/typewriter/TTY).</p>
+
+		<div id="terminal-photos">
+			<img alt="PDP-11 terminal" src="assets/images/terminal.jpg" class="photo"> 
+			<img alt="VT100 terminal" src="assets/images/vt100.jpg" class="photo">
+		</div>
+
+		<p>What we refer to as a 'terminal' today is really a terminal <i>emulator</i> -- an application that emulates the visual look of the physical terminal you see in the image above.</p>
+
+		<p>For a more in depth explanation, see <a href="https://unixsheikh.com/articles/the-terminal-the-console-and-the-shell-what-are-they.html">this great article</a>. For a more sentimental piece, see <a href="http://web.archive.org/web/20210418143324/http://pauillac.inria.fr/~weis/info/commandline.html">In the Beginning was the Command Line</a> by Neal Stephenson.</p>
+
+
+		<h2> Connecting to ENIAC</h2>
+		<p>You can connect to ENIAC via the <code class="inline-code">ssh</code> protocol. To do so, you need an <code class="inline-code">ssh</code> client. On UNIX-like systems you likely have an <code class="inline-code">ssh</code> client installed already, but for others you can download one from the Internet (e.g. PuTTY).</p>
+		
+		<p><img alt="note" src="assets/icons/butterfly.gif"> Windows users: Note that WSL (Windows Subsystem for Linux) now exists; please set it up and partake in this journey with us. See <a href="https://okunhardt.github.io/documents/Installing_WSL.pdf">Owen's guide</a> on installing WSL. Also see Micro$oft's new open source <a href="https://github.com/microsoft/terminal">terminal emulator</a>.</p>
+		
+		<p>The rest of this section assumes you're at a UNIX-like command-line. Here's what to do:</p>
+		<ol>
+			<li> Determine your username. It should be <code class="inline-code">Firstname.LastnameXX</code>, just like your Hunter email. For example: <code class="inline-code">Ken.Thompson69</code>. NOTE: The uppercase characters are important.</li>
+			<li> <code class="inline-code">ssh &lt;username&gt;@eniac.cs.hunter.cuny.edu</code>. Replace <code class="inline-code">&lt;username&gt;</code> with the username you determined in step 1.
+				<ul>
+					<li>If this is your first time logging in, you might be greeted with something like: <i>&gt; The authenticity of host 'eniac.cs.hunter.cuny.edu' can't be established.</i></li>
+					<li>Just select 'yes' for whatever further questions you're asked.</li>
+				</ul>
+			</li>
+			<li> Enter your password (you won't see anything while typing it, don't worry).</li>
+			<li> You're connected to ENIAC!</li>
+		</ol>
+
+		<p>ENIAC is only the gateway machine though, and it's missing a lot of software that is present on the other cslab hosts. Before doing any work make sure to connect to a host of your choosing (<code class="inline-code">cslab1</code>...<code class="inline-code">cslab30</code>) by running <code class="inline-code">ssh cslabN</code>.</p>
+
+		<p>For further ENIAC related concerns see <a href="http://www.compsci.hunter.cuny.edu/~csdir/">this page</a>.</p>
+
+
+		<h2> UNIX, From Soup to Nuts</h2>
+		<h3> Baby's First UNIX</h3>
+		<p>Finally, you've made it :D!</p>
+		<p>The first thing you'll have to do is learn how to navigate the file system. Here are some specific things to figure out:</p>
+		<ul>
+			<li>how are your files organized? (hierarchical file system)</li>
+			<li>how to see your files (<code class="inline-code">ls</code>)</li>
+			<li>how to move around (<code class="inline-code">cd</code>)</li>
+			<li>how to find out where you are (<code class="inline-code">pwd</code>)</li>
+			<li>how to create new files (<code class="inline-code">touch</code>, text editors, etc) and folders (<code class="inline-code">mkdir</code>)</li>
+			<li>how to move and rename files (<code class="inline-code">mv</code>)</li>
+			<li>how to copy files (<code class="inline-code">cp</code>)</li>
+			<li>how to delete files and folders (<code class="inline-code">rm</code>, <code class="inline-code">rmdir</code>) &lt;-- BE CAREFUL</li>
+			<li>how to print the contents of files (<code class="inline-code">cat)</code></li>
+		</ul>
+
+		<p><img alt="ghost" src="assets/icons/ghost.gif"> Search online for help with this.</p>
+		
+		<p>Go on a voyage around the system and see what you can find. Try to <code class="inline-code">cd /</code> and find your way back to your home folder. Find a folder that you cannot enter into (you'll see a permission denied error).</p>
+
+		<p>Other useful things to understand:</p>
+		<ul>
+			<li>file paths (absolute vs relative)</li>
+			<li><code class="inline-code">.</code> represents the directory you are in and <code class="inline-code">..</code> represents the parent directory.</li>
+			<li>command arguments and options/flags</li>
+			<li>how to use <code class="inline-code">man</code> pages</li>
+		</ul>
+
+		<p>Here is an illustration of a hierarchical file system to help you picture what's going on:</p>
+		<img alt="hierarchical file system" src="assets/images/filesystem.gif" class="photo">
+
+		<p>Once you're comfortable with this you can start experimenting with other commands. It would be wise to learn how to use a command-line text editor, which we'll discuss in a later section.</p>
+		
+		<p><img alt="note" src="assets/icons/butterfly.gif"> NOTE: you'll notice that your files are the same regardless of what cslab host you're logged into -- how could this be if you're logging in to a different computer each time? This is because the school computers are using NTFS, a networked file system.</p>
+
+		<h3> UNIX Weapons School 01</h3>
+		<ul>
+			<li>stdin/stdout</li>
+			<li>commonly used commands</li>
+			<li>command flags</li>
+			<li>command vs language
+				<ul>
+					<li>at the center of the power and idiosyncrocy of the shell is its duality as a language and a collection of programs.</li>
+				</ul>
+			</li>
+			<li>pipes</li>
+			<li>input redirection</li>
+			<li>compile and run a program</li>
+			<li>whitespace as a separator, quoting stuff, escaping whitespace</li>
+		</ul>
+
+		<h3> UNIX Weapons School 02</h3>
+		<ul>
+			<li>environment variables (env)</li>
+			<li>PATH</li>
+			<li>bashrc / profile / bashprofile</li>
+			<li>PS1 changing your prompt</li>
+			<li>ctrl-c, ctrl-d, ctrl-a/ctrl-e, alt arrows, ctrl-l</li>
+			<li>tab autocompletion</li>
+			<li>searching man pages
+				<ul>
+					<li>less pager</li>
+					<li>man -k</li>
+				</ul>
+			</li>
+			<li>wildcards, hint at regex</li>
+		</ul>
+
+		<h3> UNIX Weapons School 03</h3>
+		<ul>
+			<li>variables, '$' sigil</li>
+			<li>&&, ||, ;, $?</li>
+			<li>control flow (if, for, while)</li>
+		</ul>
+
+		<h3> Intermission: Shell Scripting</h3>
+		<ul>
+			<li><code class="inline-code">export PATH="$PATH:~/bin"</code></li>
+		</ul>
+		<p>
+			Today we have two main sorts of interfaces through which we access our computer systems-- graphical and textual. Just as windows, menus, and the mouse cursor are the <i>graphical</i> means by which we orchestrate our computing environments, the shell allows us to do so through text -- language instead of motions. <a href="https://www.reddit.com/r/unixporn/top/?t=all">Everyone's desktop is different</a> -- we all have different backgrounds and document organization schemes. But the shell and the environment it interfaces with are even more deeply personal; almost every aspect can be configured, and many things can be automated. In the Unix shell you can arbitrarily extend the language you use to talk to your system -- each program or script you create is another word in your vocabulary! Have you ever read the book <a href="https://en.wikipedia.org/wiki/Frindle">Frindle</a> by Andrew Clements? A kid discovers that individuals get to determine what words mean, so he decides to make up a new word for 'pen' -- frindle. Words, languages are made up by people, and <i>we</i> are people too! Yet, in 'real life' we rarely exercise the power to extend language. Using and modifying the Unix shell will be your first step in escaping the <a href="https://www.youtube.com/watch?v=KdnGPQaICjk">myth of determinism</a>, the idea that things are how they are because they have to be that way. Not true -- it's all been imagined up. Reject arbitrary rules that have been imposed on us. Reclaim your childhood innocence and be human.
+		</p>
+
+		<h3> UNIX Weapons School 04</h3>
+		<ul>
+			<li>job control</li>
+			<li>tmux</li>
+			<li>regex</li>
+			<li>everything is a file (/proc, cat to /tty, etc)</li>
+			<li>POSIX, bash isn't the only shell, 'bashisms'
+				<ul>
+					<li>dash is default shell on ubuntu and debian linux distributions, zsh default on mac now, sh (and tsch) for freebsd, etc</li>
+				</ul>
+			</li>
+			<li>cron, at</li>
+		</ul>
+
+		<h3> Intermission: Terminal User Interfaces (TUIs)</h3>
+		<p>Have you ever wondered how to print text in bold or a different color in your terminal?</p>
+
+		<p>You can do all sorts of crazy stuff, including this, using ANSI escape sequences. For example, run this in your shell:</p>
+
+<pre><code class="sh"># print a bold and underlined "Hello" in red
+$ printf "\033[31;1;4mHello\033[0m\n"
+</code></pre>
+
+		<p>Cool, right? Try to change the <code class="inline-code">31</code> after <code class="inline-code">\033[</code> to other numbers like <code class="inline-code">32</code>, see what happens. Also try to change the <code class="inline-code">4</code> in <code class="inline-code">;4m</code> to a <code class="inline-code">3</code> or other numbers. Another thing you can do is clear your entire terminal window including all the previous output (try scrolling up afterwards, you'll see what I mean):</p>
+
+<pre><code class="sh">$ printf '\e[2J\e[3J'</code></pre>
+
+		<p>All of these escape sequences can get annoying to type (and are not necessarily portable to different terminal emulators), so there are some alternatives. The <a href="https://www.gnu.org/software/termutils/manual/termutils-2.0/html_chapter/tput_1.html"><code class="inline-code">tput</code></a> utility is one. To print bold text with <code class="inline-code">tput</code>, you can run:</p>
+
+<pre><code class="sh">$ tput bold
+$ echo hello world
+$ tput sgr0 # reset
+</code></pre>
+
+		<p>See also:</p>
+		<ul>
+			<li><a href="https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html">Build your own Command Line with ANSI escape codes</a></li>
+			<li><a href="https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797">ANSI Escape Sequence Reference</a></li>
+			<li><a href="https://tldp.org/HOWTO/NCURSES-Programming-HOWTO/intro.html">ncurses</a></li>
+		</ul>
+
+
+		<h2> Communicating With <i>The Others</i></h2>
+		<p>UNIX is a time sharing system, we're all logged in to one big machine and sharing its resources. (The operating system is the arbiter of this process, by the way). Since we're all logged in, let's compute together!</p>
+
+		<p>Who exactly are <b>we</b>, by the way? Let's find out:</p>
+
+<pre><code class="sh">$ who
+Yours.Truly47 pts/0         Feb 5 11:28
+Ken.Thompson69 :0           Feb 5 03:22 (:0)
+Dennis.Ritchie93 :1         Feb 2 08:35 (:1)
+Brian.Kernighan72 :2        Jan 31 20:17 (:2)
+</code></pre>
+
+		<p>Heh, looks like some of the UNIX pioneers are logged into ENIAC, nice! (Just kidding, that would be super cool doe).</p>
+
+		<p>Let's send a message to Ken:</p>
+
+<pre><code class="sh">$ write Ken.Thompson69
+is your refrigerator running?
+oh crap, how do i close this 'write' thing
+uhh...
+oh yeah, I can send an EOF using CTRL-D
+</code></pre>
+
+		<p>That whole message just got sent to Ken... oh well. The way the <code class="inline-code">write</code> program is structured, it keeps accepting input until you send it an EOF (end of file) character, which is done with <code class="inline-code">CTRL-D</code> (the control key + the d key). Ken will see our message on his screen and can respond in a similar way. Try it with your friends!</p>
+
+		<p>Some other programs worth checking out: 	+ <code class="inline-code">w</code> - Show who is logged on and what they are doing 	+ <code class="inline-code">mesg</code> - display (or do not display) messages from other users 	+ <code class="inline-code">top</code> - display Linux processes 	+ <code class="inline-code">wall</code> - write a message to all users 	+ <code class="inline-code">ps aux</code> - report a snapshot of the current processes 	+ <code class="inline-code">pinky</code> - lightweight finger</p>
+
+
+		<h2> About Your Computer</h2>
+		<p>Do you know what operating system your cslab host is running? Do you know how much hard drive space it has? How much RAM? Do you know how many CPUs it has? Do you want to know? Here are some commands you can use to find out:
+		<ul>
+			<li><code class="inline-code">uptime</code> - show how long system has been running</li>
+			<li><code class="inline-code">lscpu</code> - display information about the CPU architecture</li>
+			<li><code class="inline-code">lshw</code> - list hardware</li>
+			<li><code class="inline-code">uname -a</code> - print system information</li>
+			<li><code class="inline-code">du -h</code> - estimate file space usage</li>
+			<li><code class="inline-code">df -h</code> - report file system disk space usage</li>
+			<li><code class="inline-code">free</code> - display amount of free and used memory in the system</li>
+		</ul>
+
+
+		<h2> Tranferring Files To and From ENIAC</h2>
+		<ul>
+			<li>The <code class="inline-code">scp</code> utility uses the SSH protocol to transfer files</li>
+			<li>Run these commands on your local machine</li>
+			<li><code class="inline-code">scp swag.txt First.Last12@eniac.cs.hunter.cuny.edu:~/notes</code></li>
+			<li><code class="inline-code">scp -r folder/  First.Last12@eniac.cs.hunter.cuny.edu:~</code></li>
+			<li><code class="inline-code">scp First.Last12@eniac.cs.hunter.cuny.edu:~/notes/hw1.cpp .</code>
+				<ul>
+					<li>copy file from remote machine to local machine</li>
+				</ul>
+			</li>
+		</ul>
+
+
+		<h2> Text Editors</h2>
+		<p>Text editors are programs that do what they say on the tin (edit text). If you plan on writing programs or editing files, you'll need some sort of program to facilitate that.</p>
+
+		<p>It's important to note that programs are just text (source code), so you do not actually need an application meant specifically for programming in order to write programs (as long as your save your file as plain text and name it with the file extension your compiler expects, you could theoretically write programs in Micro$oft Word).</p>
+
+		<p>You may be wondering what the difference is between IDEs and text editors.</p>
+
+		<p>An IDE (integrated development environment) is an application for programmers that combines multiple components in one place -- a text editor, compiler,  debugger, and so on. IDEs are usually built to be used with a specific programming language, though some support multiple. Some examples of IDEs are Eclipse, Xcode, Visual Studio, and JetBrains PyCharm.</p>
+
+		<p>A text editor in its simplest form is an application that lets you edit text. Some programming-oriented editors provide features that are useful for programmers, such as syntax-highlighting, auto-complete, and so on. Other editors are just there to edit text (e.g. Notepad). Text editors don't necessarily have to be graphical, they can be programs on the command-line. Some examples of text editors are Sublime Text, Atom, VS Code, Emacs, vim, Nano, and so on. (Note: at the risk of stating the obvious, text editors perform the generic function of editing text, and therefore are suitable to be used with any programming language).</p>
+		
+		<p>Bonus: applications like Micro$oft Word and Google Docs are called 'Word Processors' -- they're like the IDEs of document preparation.</p>
+
+		<p>If you want to write programs remotely on ENIAC, you'll need to do so using a command-line text editor (<i>actually this isn't strictly true -- later we will discuss something called X11 forwarding.</i>). At first this may seem scary, but it is well worth the investment. Nano is a pretty accessible editor (originally writen for non-technical people to write emails in), so you may want to start there. Other available editors are vim and Emacs (they are very different and come from different cultural milieus; there is also an age-old holy war waging between vim and Emacs users). These editors have a steep learning curve but learning how to use one of them is well worth your time.</p>
+
+		<p><img alt="ghost icon" src="assets/icons/ghost.gif"> - Teaching you how to use an editor is outside the scope of this document, please search that up on your own.</p>
+
+		<p><img alt="note" src="assets/icons/butterfly.gif"> - NOTE: if you're curious about vim, try running the <code class="inline-code">vimtutor</code> program on ENIAC.</p>
+
+
+		<h2> Software on ENIAC</h2>
+		<p>There is a lot of interesting software installed on ENIAC ready for us to explore. The following is a survey of some of that software, meant to encourage you to dig in further.</p>
+
+		<h3> Programming Languages</h3>
+		<blockquote> A language that doesn't affect the way you think about programming, is not worth knowing. - <a href="http://www.cs.yale.edu/homes/perlis-alan/quotes.html">Alan Perlis</a></blockquote>
+		<p>
+			There are actually a good bunch of programming languages  (i.e. compilers/interpreters) available on ENIAC. In school we mostly learn about procedural programming and <small>(faux)</small> object-oriented programming, specifically with languages in the C family. Programming can look much different than that, it's of utmost important that you open your mind by exploring different paradigms of programming languages (e.g. functional programming, logic programming, etc). Also see the paper <a href="https://www.eecg.utoronto.ca/~jzhu/csc326/readings/iverson.pdf">Notation as a Tool of Thought</a> by Ken Iverson.
+		</p>
+		<p>
+			Here are some languages we have on our system:
+		</p>
+		<ul>
+			<li>C (<code class="inline-code">gcc</code>)</li>
+			<li>C++ (<code class="inline-code">g++</code>)</li>
+			<li>Haskell (<code class="inline-code">hugs</code>)
+				<ul>
+					<li><a href="http://learnyouahaskell.com/">Learn You a Haskell for Great Good!</a></li>
+					<li>Haskell 98</li>
+				</ul>
+			</li>
+			<li>Prolog (<code class="inline-code">prolog</code>)
+				<ul>
+					<li>SWI-Prolog</li>
+				</ul>
+			</li>
+			<li>Steel Bank Common Lisp (<code class="inline-code">sbcl</code>)
+				<ul>
+					<li><a href="https://mitpress.mit.edu/sites/default/files/sicp/index.html">SICP</a></li>
+					<li><a href="https://www.dreamsongs.com/RiseOfWorseIsBetter.html">The Rise of Worse is Better</a> by Richard Gabriel</li>
+				</ul>
+			</li>
+			<li>Java (<code class="inline-code">java</code>)</li>
+			<li>Python (<code class="inline-code">python2</code>, <code class="inline-code">python3</code>)
+				<ul>
+					<li>pylint, pyreverse3, idle, pip3 (try <code class="inline-code">--local</code> flag)</li>
+				</ul>
+			</li>
+			<li>Perl (<code class="inline-code">perl</code>)
+				<ul>
+					<li>cpan</li>
+				</ul>
+			</li>
+			<li>Ruby (<code class="inline-code">ruby</code>)</li>
+			<li>Scala (<code class="inline-code">scala</code>)</li>
+			<li>JavaScript (<code class="inline-code">node</code>)
+				<ul>
+					<li>create-react-app, npm</li>
+				</ul>
+			</li>
+			<li>Fortran (<code class="inline-code">gfortran</code>)</li>
+			<li>Awk (<code class="inline-code">awk</code>)
+				<ul>
+					<li>Brian Kernighan's Talk, <a href="https://www.youtube.com/watch?v=xnCgoEyz31M">Unix Today and Tomorrow: The Languages</a></li>
+				</ul>
+			</li>
+			<li>R (<code class="inline-code">R</code>)</li>
+			<li>M4 (<code class="inline-code">m4</code>)</li>
+		</ul>
+
+		<p>We encourage you to take the course <i>CSCI 460 - Advanced Programming Languages</i> with professor Subash Shankar.</p>
+
+
+		<h3> Editors</h3>
+		<ul>
+			<li>nvim, vim, vi
+				<ul><li>vimtutor</li></ul>
+			</li>
+			<li>emacs</li>
+			<li>nano</li>
+			<li>ed - Ed is the standard text editor</li>
+		</ul>
+
+		<h3> Version Control Systems</h3>
+		<ul>
+			<li>explain version control</li>
+			<li>git != github (show sourcehut, gitlab, etc)</li>
+			<li>git isn't the only version control tool (show others, hg)</li>
+			<li><a href="https://www.linuxjournal.com/content/git-origin-story">The shared history of Linux and Git</a></li>
+			<li>we have git and mercurial (hg)</li>
+			<li>git is decentralized, vs. centralized (e.g. perforce)</li>
+		</ul>
+
+		<h3> Build Systems</h3>
+		<ul>
+			<li>autoconf, make, cmake, rake, sbt</li>
+		</ul>
+
+		<h3> Utilities for Debugging and Reverse Engineering Programs</h3>
+		<ul>
+			<li>strings, nm (-D), objdump (-T) -d, readelf -s, strace, ltrace, ptrace, gdb</li>
+		</ul>
+
+		<h3> Image-Related</h3>
+		<ul>
+			<li>imagemagick</li>
+			<li>find some other cool utilities with <code class="inline-code">man -k pgm</code> (or with <code class="inline-code">ppm</code>, <code class="inline-code">pbm</code>)</li>
+		</ul>
+
+		<h3> Sound-Related</h3>
+		<ul>
+			<li>probably won't work over SSH, but cool to try in person</li>
+			<li>aplay
+				<ul>
+					<li><a href="http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html">http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html</a></li>
+					<li><a href="http://countercomplex.blogspot.com/2011/10/some-deep-analysis-of-one-line-music.html">http://countercomplex.blogspot.com/2011/10/some-deep-analysis-of-one-line-music.html</a></li>
+				</ul>
+			</li>
+			<li>try running some of these: <code class="inline-code">amixer</code>, <code class="inline-code">spd-say</code>, <code class="inline-code">speaker-test</code>, <code class="inline-code">speech-dispatcher</code>, <code class="inline-code">pulseaudio</code></li>
+		</ul>
+
+		<h3> Accessing The Internet</h3>
+		<ul>
+			<li>curl, ftp, sftp, scp, ssh, telnet, netcat, apache2</li>
+		</ul>
+
+		<h3> Viewing the Linux Source Code</h3>
+		<ul>
+			<li><code class="inline-code">/data/biocs/b/ubuntu/bionic/</code></li>
+		</ul>
+
+
+		<h2> Graphical Software on ENIAC and X11 Forwarding</h2>
+		<ul>
+			<li><code class="inline-code">ssh -X</code></li>
+			<li>try running one of these: <code class="inline-code">code</code>, <code class="inline-code">firefox</code>, <code class="inline-code">gedit</code>, <code class="inline-code">idle</code>, <code class="inline-code">xeyes</code>, <code class="inline-code">ico</code></li>
+			<li>need to be using X11 (e.g. most common Linux distributions), not Windows or MacOS
+				<ul>
+					<li>for MacOS see https://www.xquartz.org/</li>
+				</ul>
+			</li>
+		</ul>
+
+		<h2> Document Typesetting on UNIX</h2>
+		<ul>
+			<li>what is typesetting</li>
+			<li>markup languages vs. WYSIWYG</li>
+			<li>groff (eqn, pic, soelim)
+				<ul>
+					<li>https://josh8.com/blog/typesetting<i>with</i>groff.html</li>
+				</ul>
+			</li>
+			<li>ghostscript</li>
+			<li>other stuff available: pandoc, pdfimages, pdfinfo, pdfseparate, pdftoppm, pdftotext, pdftohtml, cupsfilter</li>
+		</ul>
+
+		<h2> Appendix: Linux Distributions</h2>
+		<ul>
+			<li>Explain what a distribution is and why it's not just "Linux"</li>
+			<li>List some common distributions</li>
+			<li>Explain differences between distributions and how to choose one</li>
+		</ul>
+		<h3> Desktop Environments vs Windowing Systems</h3>
+		<ul>
+			<li>lorem ipsum</li>
+		</ul>
+
+		<h2> Further Reading</h2>
+		<ul>
+			<li><a href="http://files.catwell.info/misc/mirror/the-unix-programming-environment-kernighan-pike.pdf">The UNIX Programming Environment</a> by Brian Kernighan and Rob Pike</li>
+		</ul>
+	</div>
+</html>
