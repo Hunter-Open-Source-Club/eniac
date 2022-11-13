@@ -1,5 +1,5 @@
 # ![tree](assets/icons/tree.ico) The ENIAC Page
-A page is dedicated to information about our school's UNIX workstations.
+A page dedicated to information about our school's UNIX workstations.
 
  https://hunter-open-source-club.github.io/eniac/
 
